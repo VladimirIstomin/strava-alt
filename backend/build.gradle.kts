@@ -16,6 +16,8 @@ dependencies {
     implementation("io.ktor:ktor-client-core:2.3.1")
     implementation("io.ktor:ktor-client-cio:2.3.1")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.1")
+    // SLF4J binding for logging
+    implementation("ch.qos.logback:logback-classic:1.4.14")
     testImplementation(kotlin("test"))
 }
 
