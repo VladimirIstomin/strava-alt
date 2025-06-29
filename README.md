@@ -19,6 +19,14 @@ cd backend
 ./gradlew run
 ```
 
+The backend requires Strava API credentials. Set the following environment variables before running:
+
+```
+STRAVA_CLIENT_ID=<your_client_id>
+STRAVA_CLIENT_SECRET=<your_client_secret>
+STRAVA_REDIRECT_URI=http://localhost:8080/callback
+```
+
 The server will start on `http://localhost:8080`.
 
 ## Running the frontend
@@ -32,6 +40,8 @@ npm run dev
 ```
 
 The app will be available at `http://localhost:5173` by default.
+
+Open the frontend in your browser and click "Login with Strava" to authorize and see your name in the top right corner.
 
 ## Android project
 
