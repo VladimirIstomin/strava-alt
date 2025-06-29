@@ -17,6 +17,8 @@ import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.set
+import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.http.HttpMethod
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
@@ -47,6 +49,14 @@ fun Application.module() {
 
     install(Sessions) {
         cookie<UserSession>("SESSION")
+    }
+
+    install(CORS) {
+        allowCredentials = true
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowHeader(HttpHeaders.ContentType)
+        anyHost()
     }
 
     val httpClient = HttpClient(CIO) {
