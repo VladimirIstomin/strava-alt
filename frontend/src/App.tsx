@@ -23,6 +23,7 @@ function App() {
   return (
     <>
       <header className="header">
+        <div className="logo">StravaAlt</div>
         {user ? (
           <div className="user-block">
             <img src={user.avatar} alt="avatar" className="avatar" />
@@ -35,7 +36,9 @@ function App() {
           <a href="http://localhost:8080/login">Login with Strava</a>
         )}
       </header>
-      <h1>StravaAlt Frontend</h1>
+      <main className="content">
+        <h1>Welcome to StravaAlt</h1>
+      </main>
     </>
   )
 }
