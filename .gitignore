@@ -1,0 +1,16 @@
+# Kotlin
+.gradle
+build/
+*.iml
+out/
+
+# Node
+node_modules/
+dist/
+
+# Android
+android/.gradle
+android/local.properties
+android/.idea
+android/.vscode
+android/app/build/
