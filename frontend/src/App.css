@@ -1,8 +1,24 @@
 .header {
   display: flex;
-  justify-content: flex-end;
-  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
   position: relative;
+  background: linear-gradient(90deg, #d6c4ff, #ffd6c4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #faf7ff;
+  color: #333;
+}
+
+.logo {
+  font-weight: bold;
+  color: #8a56ff;
+  font-size: 1.25rem;
 }
 
 .user-block {
@@ -26,8 +42,27 @@
   border: 1px solid #ccc;
   padding: 0.5rem 1rem;
   display: none;
+  white-space: nowrap;
 }
 
 .user-block:hover .menu {
   display: block;
+}
+
+a {
+  color: #ff8a65;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  color: #8a56ff;
 }
