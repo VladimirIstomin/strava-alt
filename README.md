@@ -19,6 +19,9 @@ cd backend
 ./gradlew run
 ```
 
+JDK 17 must be installed manually before running the backend. Gradle will not
+download the JDK automatically, so ensure it is available on your `PATH`.
+
 The backend requires Strava API credentials. Set the following environment variables before running:
 
 ```
