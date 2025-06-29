@@ -17,6 +17,7 @@ import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.set
+import io.ktor.server.sessions.clear
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.http.HttpMethod
 import io.ktor.client.HttpClient
@@ -99,6 +100,11 @@ fun Application.module() {
             call.respondRedirect("http://localhost:5173")
         }
 
+        get("/logout") {
+            call.sessions.clear<UserSession>()
+            call.respondRedirect("http://localhost:5173")
+        }
+
         get("/api/me") {
             val session = call.sessions.get<UserSession>()
             if (session == null) {
@@ -110,7 +116,12 @@ fun Application.module() {
                 header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
             }.body()
 
-            call.respond(UserInfo("${athlete.firstname} ${athlete.lastname}"))
+            call.respond(
+                UserInfo(
+                    name = "${athlete.firstname} ${athlete.lastname}",
+                    avatar = athlete.profile
+                )
+            )
         }
     }
 }
@@ -122,7 +133,7 @@ data class UserSession(val accessToken: String)
 data class TokenResponse(val access_token: String, val athlete: Athlete)
 
 @Serializable
-data class Athlete(val firstname: String, val lastname: String)
+data class Athlete(val firstname: String, val lastname: String, val profile: String)
 
 @Serializable
-data class UserInfo(val name: String)
+data class UserInfo(val name: String, val avatar: String)

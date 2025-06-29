@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import './App.css'
+
+interface UserInfo {
+  name: string
+  avatar: string
+}
 
 function App() {
-  const [name, setName] = useState<string | null>(null)
+  const [user, setUser] = useState<UserInfo | null>(null)
 
   useEffect(() => {
     fetch('http://localhost:8080/api/me', { credentials: 'include' })
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (data && data.name) {
-          setName(data.name as string)
+          setUser({ name: data.name as string, avatar: data.avatar as string })
         }
       })
       .catch(() => {})
@@ -16,9 +22,15 @@ function App() {
 
   return (
     <>
-      <header style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
-        {name ? (
-          <span>{name}</span>
+      <header className="header">
+        {user ? (
+          <div className="user-block">
+            <img src={user.avatar} alt="avatar" className="avatar" />
+            <span>{user.name}</span>
+            <div className="menu">
+              <a href="http://localhost:8080/logout">Logout</a>
+            </div>
+          </div>
         ) : (
           <a href="http://localhost:8080/login">Login with Strava</a>
         )}
