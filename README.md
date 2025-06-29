@@ -29,6 +29,19 @@ STRAVA_REDIRECT_URI=http://localhost:8080/callback
 
 The server will start on `http://localhost:8080`.
 
+### Auto-reloading both projects
+
+From the repository root you can launch both the backend and frontend in watch
+mode:
+
+```bash
+npm install
+npm run dev
+```
+
+This command starts the backend with `nodemon` and the frontend with Vite. Both
+servers restart automatically whenever code changes.
+
 ## Running the frontend
 
 Install dependencies and start the development server:
