@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 
+const BACKEND_URL = import.meta.env.BACKEND_URL || 'http://localhost:8080'
+
 interface UserInfo {
   name: string
   avatar: string
@@ -32,7 +34,7 @@ function App() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/me', { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/me`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (data && data.name) {
@@ -44,7 +46,7 @@ function App() {
 
   useEffect(() => {
     if (!user) return
-    fetch('http://localhost:8080/api/activities?limit=5&offset=0', { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/activities?limit=5&offset=0`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : [])
       .then(data => setRecent(data as Activity[]))
       .catch(() => {})
@@ -53,7 +55,7 @@ function App() {
   useEffect(() => {
     if (view !== 'activities' || loading || !hasMore) return
     setLoading(true)
-    fetch(`http://localhost:8080/api/activities?limit=20&offset=${offset}`, { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/activities?limit=20&offset=${offset}`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : [])
       .then((data: Activity[]) => {
         setActivities(prev => [...prev, ...data])
@@ -84,11 +86,11 @@ function App() {
             <img src={user.avatar} alt="avatar" className="avatar" />
             <span>{user.name}</span>
             <div className="menu">
-              <a href="http://localhost:8080/logout">Logout</a>
+              <a href={`${BACKEND_URL}/logout`}>Logout</a>
             </div>
           </div>
         ) : (
-          <a href="http://localhost:8080/login">Login with Strava</a>
+          <a href={`${BACKEND_URL}/login`}>Login with Strava</a>
         )}
       </header>
       <main className="content">
