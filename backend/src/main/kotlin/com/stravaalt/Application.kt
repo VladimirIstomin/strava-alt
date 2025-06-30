@@ -123,6 +123,30 @@ fun Application.module() {
                 )
             )
         }
+
+        get("/api/activities") {
+            val session = call.sessions.get<UserSession>()
+            if (session == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 5
+            val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
+
+            val page = offset / limit + 1
+
+            val activities: List<ActivitySummary> = httpClient.get("https://www.strava.com/api/v3/athlete/activities") {
+                header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
+                parameter("page", page)
+                parameter("per_page", limit)
+            }.body()
+
+            val start = offset % limit
+            val result = if (start > 0) activities.drop(start) else activities
+
+            call.respond(result)
+        }
     }
 }
 
@@ -137,3 +161,11 @@ data class Athlete(val firstname: String, val lastname: String, val profile: Str
 
 @Serializable
 data class UserInfo(val name: String, val avatar: String)
+
+@Serializable
+data class ActivitySummary(
+    val id: Long,
+    val name: String,
+    val start_date: String,
+    val type: String
+)
