@@ -5,5 +5,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "strava-alt-android"
+rootProject.name = "travalt-android"
 include(":app")

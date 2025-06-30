@@ -5,5 +5,5 @@ RUN gradle installDist
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/build/install/strava-alt-backend/ /app/
-CMD ["./bin/strava-alt-backend"]
+COPY --from=build /app/build/install/travalt-backend/ /app/
+CMD ["./bin/travalt-backend"]

@@ -80,7 +80,7 @@ function App() {
   return (
     <>
       <header className="header">
-        <div className="logo">StravaAlt</div>
+        <div className="logo">Travalt</div>
         {user ? (
           <div className="user-block">
             <img src={user.avatar} alt="avatar" className="avatar" />
@@ -96,7 +96,7 @@ function App() {
       <main className="content">
         {view === 'home' && (
           <>
-            <h1>Welcome to StravaAlt</h1>
+            <h1>Welcome to Travalt</h1>
             {user && (
               <>
                 <h2>Последние активности</h2>

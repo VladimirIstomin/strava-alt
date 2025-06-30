@@ -1,4 +1,4 @@
-package com.stravaalt.app
+package com.travalt.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
