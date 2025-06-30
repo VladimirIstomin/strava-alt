@@ -47,7 +47,7 @@ servers restart automatically whenever code changes.
 
 ## Running the frontend
 
-Install dependencies and start the development server:
+Install dependencies and start the development server. The frontend expects the backend URL in the `BACKEND_URL` environment variable, which defaults to `http://localhost:8080`:
 
 ```bash
 cd frontend
