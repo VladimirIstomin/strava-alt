@@ -34,7 +34,7 @@ function App() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetch(`${BACKEND_URL}/api/me`, { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/v1/me`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : null)
       .then(data => {
         if (data && data.name) {
@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     if (!user) return
-    fetch(`${BACKEND_URL}/api/activities?limit=5&offset=0`, { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/v1/activities?limit=5&offset=0`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : [])
       .then(data => setRecent(data as Activity[]))
       .catch(() => {})
@@ -55,7 +55,7 @@ function App() {
   useEffect(() => {
     if (view !== 'activities' || loading || !hasMore) return
     setLoading(true)
-    fetch(`${BACKEND_URL}/api/activities?limit=20&offset=${offset}`, { credentials: 'include' })
+    fetch(`${BACKEND_URL}/api/v1/activities?limit=20&offset=${offset}`, { credentials: 'include' })
       .then(res => res.ok ? res.json() : [])
       .then((data: Activity[]) => {
         setActivities(prev => [...prev, ...data])
@@ -86,11 +86,11 @@ function App() {
             <img src={user.avatar} alt="avatar" className="avatar" />
             <span>{user.name}</span>
             <div className="menu">
-              <a href={`${BACKEND_URL}/logout`}>Logout</a>
+              <a href={`${BACKEND_URL}/api/v1/logout`}>Logout</a>
             </div>
           </div>
         ) : (
-          <a href={`${BACKEND_URL}/login`}>Login with Strava</a>
+          <a href={`${BACKEND_URL}/api/v1/login`}>Login with Strava</a>
         )}
       </header>
       <main className="content">

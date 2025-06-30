@@ -27,10 +27,11 @@ The backend requires Strava API credentials. Set the following environment varia
 ```
 STRAVA_CLIENT_ID=<your_client_id>
 STRAVA_CLIENT_SECRET=<your_client_secret>
-STRAVA_REDIRECT_URI=http://localhost:8080/callback
+STRAVA_REDIRECT_URI=http://localhost:8080/api/v1/callback
 ```
 
 The server will start on `http://localhost:8080`.
+All API endpoints are available under the `/api/v1` path.
 
 ### Auto-reloading both projects
 

@@ -11,6 +11,7 @@ import io.ktor.server.response.respondText
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.routing
 import io.ktor.server.routing.get
+import io.ktor.server.routing.route
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
@@ -42,7 +43,7 @@ fun main() {
 fun Application.module() {
     val clientId = System.getenv("STRAVA_CLIENT_ID") ?: error("STRAVA_CLIENT_ID not set")
     val clientSecret = System.getenv("STRAVA_CLIENT_SECRET") ?: error("STRAVA_CLIENT_SECRET not set")
-    val redirectUri = System.getenv("STRAVA_REDIRECT_URI") ?: "http://localhost:8080/callback"
+    val redirectUri = System.getenv("STRAVA_REDIRECT_URI") ?: "http://localhost:8080/api/v1/callback"
 
     install(ContentNegotiation) {
         json(Json { prettyPrint = true; ignoreUnknownKeys = true })
@@ -71,23 +72,24 @@ fun Application.module() {
             call.respondText("StravaAlt backend running")
         }
 
-        get("/login") {
-            val url = URLBuilder("https://www.strava.com/oauth/authorize").apply {
-                parameters.append("client_id", clientId)
-                parameters.append("redirect_uri", redirectUri)
-                parameters.append("response_type", "code")
-                parameters.append("scope", "read")
-                parameters.append("approval_prompt", "auto")
-            }.buildString()
-            call.respondRedirect(url)
-        }
-
-        get("/callback") {
-            val code = call.request.queryParameters["code"]
-            if (code == null) {
-                call.respond(HttpStatusCode.BadRequest, "Missing code")
-                return@get
+        route("/api/v1") {
+            get("/login") {
+                val url = URLBuilder("https://www.strava.com/oauth/authorize").apply {
+                    parameters.append("client_id", clientId)
+                    parameters.append("redirect_uri", redirectUri)
+                    parameters.append("response_type", "code")
+                    parameters.append("scope", "read")
+                    parameters.append("approval_prompt", "auto")
+                }.buildString()
+                call.respondRedirect(url)
             }
+
+            get("/callback") {
+                val code = call.request.queryParameters["code"]
+                if (code == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing code")
+                    return@get
+                }
 
             val token: TokenResponse = httpClient.post("https://www.strava.com/oauth/token") {
                 parameter("client_id", clientId)
@@ -96,40 +98,40 @@ fun Application.module() {
                 parameter("grant_type", "authorization_code")
             }.body()
 
-            call.sessions.set(UserSession(token.access_token))
-            call.respondRedirect("http://localhost:5173")
-        }
-
-        get("/logout") {
-            call.sessions.clear<UserSession>()
-            call.respondRedirect("http://localhost:5173")
-        }
-
-        get("/api/me") {
-            val session = call.sessions.get<UserSession>()
-            if (session == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@get
+                call.sessions.set(UserSession(token.access_token))
+                call.respondRedirect("http://localhost:5173")
             }
+
+            get("/logout") {
+                call.sessions.clear<UserSession>()
+                call.respondRedirect("http://localhost:5173")
+            }
+
+            get("/me") {
+                val session = call.sessions.get<UserSession>()
+                if (session == null) {
+                    call.respond(HttpStatusCode.Unauthorized)
+                    return@get
+                }
 
             val athlete: Athlete = httpClient.get("https://www.strava.com/api/v3/athlete") {
                 header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
             }.body()
 
-            call.respond(
-                UserInfo(
-                    name = "${athlete.firstname} ${athlete.lastname}",
-                    avatar = athlete.profile
+                call.respond(
+                    UserInfo(
+                        name = "${athlete.firstname} ${athlete.lastname}",
+                        avatar = athlete.profile
+                    )
                 )
-            )
-        }
-
-        get("/api/activities") {
-            val session = call.sessions.get<UserSession>()
-            if (session == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@get
             }
+
+            get("/activities") {
+                val session = call.sessions.get<UserSession>()
+                if (session == null) {
+                    call.respond(HttpStatusCode.Unauthorized)
+                    return@get
+                }
 
             val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 5
             val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
@@ -142,10 +144,11 @@ fun Application.module() {
                 parameter("per_page", limit)
             }.body()
 
-            val start = offset % limit
-            val result = if (start > 0) activities.drop(start) else activities
+                val start = offset % limit
+                val result = if (start > 0) activities.drop(start) else activities
 
-            call.respond(result)
+                call.respond(result)
+            }
         }
     }
 }
