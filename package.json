@@ -1,0 +1,13 @@
+{
+  "name": "strava-alt-root",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "nodemon --watch backend/src --ext kt --exec \"cd backend && gradle run\"",
+    "frontend": "npm --prefix frontend run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.2"
+  }
+}
