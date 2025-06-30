@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: strava-alt-backend
+    env: docker
+    rootDir: backend
+    plan: free
+    autoDeploy: true
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: STRAVA_CLIENT_ID
+      - key: STRAVA_CLIENT_SECRET
+      - key: STRAVA_REDIRECT_URI
+  - type: web
+    name: strava-alt-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    autoDeploy: true
