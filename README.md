@@ -1,4 +1,4 @@
-# StravaAlt
+# Travalt
 
 This repository contains a multi-module project that aims to provide an alternative interface to Strava.
 The backend is written in Kotlin using Ktor, the frontend is a React + TypeScript app, and
