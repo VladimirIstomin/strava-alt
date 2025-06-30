@@ -1,6 +1,6 @@
-<manifest package="com.stravaalt.app" xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.travalt.app" xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="StravaAlt"
+        android:label="Travalt"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"

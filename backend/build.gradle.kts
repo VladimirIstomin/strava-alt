@@ -24,7 +24,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.stravaalt.ApplicationKt")
+    mainClass.set("com.travalt.ApplicationKt")
 }
 
 kotlin {

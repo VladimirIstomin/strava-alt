@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.stravaalt.app"
+    namespace = "com.travalt.app"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.stravaalt.app"
+        applicationId = "com.travalt.app"
         minSdk = 26
         targetSdk = 33
         versionCode = 1

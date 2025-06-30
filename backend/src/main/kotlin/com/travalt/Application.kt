@@ -1,4 +1,4 @@
-package com.stravaalt
+package com.travalt
 
 
 import io.ktor.server.application.Application
@@ -69,7 +69,7 @@ fun Application.module() {
 
     routing {
         get("/") {
-            call.respondText("StravaAlt backend running")
+            call.respondText("Travalt backend running")
         }
 
         route("/api/v1") {

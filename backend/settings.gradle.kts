@@ -1,1 +1,1 @@
-rootProject.name = "strava-alt-backend"
+rootProject.name = "travalt-backend"

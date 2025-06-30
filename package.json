@@ -1,5 +1,5 @@
 {
-  "name": "strava-alt-root",
+  "name": "travalt-root",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
