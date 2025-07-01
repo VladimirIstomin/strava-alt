@@ -228,6 +228,11 @@ data class UserInfo(val name: String, val avatar: String)
 data class ActivitySummary(
     val id: Long,
     val name: String,
-    val start_date: String,
-    val type: String
+    val startDate: String,
+    val type: String,
+    val averageHeartrate: Double? = null,
+    val averageSpeed: Double? = null,
+    val movingTime: Int? = null,
+    val distance: Double? = null,
+    val averageCadence: Double? = null
 )

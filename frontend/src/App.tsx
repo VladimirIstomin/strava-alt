@@ -11,8 +11,13 @@ interface UserInfo {
 interface Activity {
   id: number
   name: string
-  start_date: string
+  startDate: string
   type: string
+  averageHeartrate?: number
+  averageSpeed?: number
+  movingTime?: number
+  distance?: number
+  averageCadence?: number
 }
 
 const emojiMap: Record<string, string> = {
@@ -33,6 +38,17 @@ function App() {
   const [offset, setOffset] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
+  const formatTime = (seconds?: number): string => {
+    if (seconds == null) return '—'
+    const h = Math.floor(seconds / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    const s = seconds % 60
+    return [h, m, s]
+      .map(v => v.toString().padStart(2, '0'))
+      .join(':')
+  }
 
   useEffect(() => {
     const url = new URL(window.location.href)
@@ -167,7 +183,7 @@ function App() {
                   {recent.map(a => (
                     <li key={a.id} className="activity-item">
                       <span>{emojiMap[a.type] || '❓'} {a.name}</span>
-                      <span>{new Date(a.start_date).toLocaleDateString()}</span>
+                      <span>{new Date(a.start_date).toLocaleString()}</span>
                     </li>
                   ))}
                 </ul>
@@ -181,8 +197,48 @@ function App() {
             <ul className="activity-list">
               {activities.map(a => (
                 <li key={a.id} className="activity-item">
-                  <span>{emojiMap[a.type] || '❓'} {a.name}</span>
-                  <span>{new Date(a.start_date).toLocaleString()}</span>
+                  <button
+                    className="activity-header"
+                    onClick={() =>
+                      setExpandedId(expandedId === a.id ? null : a.id)
+                    }
+                  >
+                    <span>
+                      {emojiMap[a.type] || '❓'} {a.name}
+                    </span>
+                    <span>
+                      {new Date(a.startDate).toLocaleString()}
+                    </span>
+                  </button>
+                  {expandedId === a.id && (
+                    <div className="activity-details">
+                      <div>
+                        ❤️ Средний пульс:{' '}
+                        {a.averageHeartrate?.toFixed(0) || '—'}
+                      </div>
+                      <div>
+                        💨 Средняя скорость:{' '}
+                        {a.averageSpeed
+                          ? (a.averageSpeed * 3.6).toFixed(1)
+                          : '—'}{' '}
+                        км/ч
+                      </div>
+                      <div>⏱ Время: {formatTime(a.movingTime)}</div>
+                      <div>
+                        🛣 Дистанция:{' '}
+                        {a.distance
+                          ? (a.distance / 1000).toFixed(2)
+                          : '—'}{' '}
+                        км
+                      </div>
+                      {a.type === 'Ride' && (
+                        <div>
+                          🔄 Каденс:{' '}
+                          {a.averageCadence?.toFixed(0) || '—'}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

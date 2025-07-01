@@ -67,13 +67,6 @@ h1 {
   color: #8a56ff;
 }
 
-.activity-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1rem 0;
-}
-
 .activity-list {
   list-style: none;
   padding: 0;
@@ -82,11 +75,29 @@ h1 {
 
 .activity-item {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 0.5rem 0;
   border-bottom: 1px solid #eee;
 }
 
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.activity-details {
+  text-align: left;
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
 
 .all-button, .back-button {
   padding: 0.5rem 1rem;
