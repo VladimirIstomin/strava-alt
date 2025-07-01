@@ -180,13 +180,53 @@ function App() {
                 </button>
               </div>
               <ul className="activity-list">
-                  {recent.map(a => (
-                    <li key={a.id} className="activity-item">
-                      <span>{emojiMap[a.type] || '❓'} {a.name}</span>
-                      <span>{new Date(a.startDate).toLocaleString()}</span>
-                    </li>
-                  ))}
-                </ul>
+                {recent.map(a => (
+                  <li key={a.id} className="activity-item">
+                    <button
+                      className="activity-header"
+                      onClick={() =>
+                        setExpandedId(expandedId === a.id ? null : a.id)
+                      }
+                    >
+                      <span>
+                        {emojiMap[a.type] || '❓'} {a.name}
+                      </span>
+                      <span>
+                        {new Date(a.startDate).toLocaleString()}
+                      </span>
+                    </button>
+                    {expandedId === a.id && (
+                      <div className="activity-details">
+                        <div>
+                          ❤️ Средний пульс:{' '}
+                          {a.averageHeartrate?.toFixed(0) || '—'}
+                        </div>
+                        <div>
+                          💨 Средняя скорость:{' '}
+                          {a.averageSpeed
+                            ? (a.averageSpeed * 3.6).toFixed(1)
+                            : '—'}{' '}
+                          км/ч
+                        </div>
+                        <div>⏱ Время: {formatTime(a.movingTime)}</div>
+                        <div>
+                          🛣 Дистанция:{' '}
+                          {a.distance
+                            ? (a.distance / 1000).toFixed(2)
+                            : '—'}{' '}
+                          км
+                        </div>
+                        {a.type === 'Ride' && (
+                          <div>
+                            🔄 Каденс:{' '}
+                            {a.averageCadence?.toFixed(0) || '—'}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
               </>
             )}
           </>
