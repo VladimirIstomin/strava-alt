@@ -44,6 +44,7 @@ fun Application.module() {
     val clientId = System.getenv("STRAVA_CLIENT_ID") ?: error("STRAVA_CLIENT_ID not set")
     val clientSecret = System.getenv("STRAVA_CLIENT_SECRET") ?: error("STRAVA_CLIENT_SECRET not set")
     val redirectUri = System.getenv("STRAVA_REDIRECT_URI") ?: "http://localhost:8080/api/v1/callback"
+    val frontendUrl = System.getenv("FRONTEND_URL") ?: "http://localhost:5173"
 
     install(ContentNegotiation) {
         json(Json { prettyPrint = true; ignoreUnknownKeys = true })
@@ -99,12 +100,12 @@ fun Application.module() {
             }.body()
 
                 call.sessions.set(UserSession(token.access_token))
-                call.respondRedirect("http://localhost:5173")
+                call.respondRedirect(frontendUrl)
             }
 
             get("/logout") {
                 call.sessions.clear<UserSession>()
-                call.respondRedirect("http://localhost:5173")
+                call.respondRedirect(frontendUrl)
             }
 
             get("/me") {
