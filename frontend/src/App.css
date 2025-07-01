@@ -120,11 +120,20 @@ h1 {
   cursor: pointer;
 }
 
+
 .activities-header .all-button {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.activities-header .back-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: 0;
 }
 
 .back-button {
