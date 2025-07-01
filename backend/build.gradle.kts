@@ -15,6 +15,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.1")
     implementation("io.ktor:ktor-server-sessions:2.3.1")
     implementation("io.ktor:ktor-server-cors:2.3.1")
+    implementation("io.ktor:ktor-server-call-logging-jvm:2.3.1")
     implementation("io.ktor:ktor-client-core:2.3.1")
     implementation("io.ktor:ktor-client-cio:2.3.1")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.1")

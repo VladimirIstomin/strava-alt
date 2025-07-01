@@ -13,6 +13,7 @@ import io.ktor.server.routing.routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.sessions
@@ -35,6 +36,9 @@ import io.ktor.http.URLBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import org.slf4j.LoggerFactory
+
+private val log = LoggerFactory.getLogger("Application")
 
 fun main() {
     embeddedServer(Netty, port = 8080, module = Application::module).start(wait = true)
@@ -60,6 +64,10 @@ fun Application.module() {
         allowMethod(HttpMethod.Post)
         allowHeader(HttpHeaders.ContentType)
         anyHost()
+    }
+
+    install(CallLogging) {
+        logger = log
     }
 
     val httpClient = HttpClient(CIO) {
@@ -100,7 +108,7 @@ fun Application.module() {
                 }.body()
 
                 call.sessions.set(UserSession(token.access_token))
-                call.application.environment.log.info("Redirecting authenticated user to {}", frontendUrl)
+                log.info("Redirecting authenticated user to {}", frontendUrl)
                 call.respondRedirect(frontendUrl)
             }
 
