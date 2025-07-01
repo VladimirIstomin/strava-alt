@@ -31,6 +31,7 @@ import io.ktor.http.URLBuilder
 import io.ktor.http.Cookie
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 
@@ -228,11 +229,16 @@ data class UserInfo(val name: String, val avatar: String)
 data class ActivitySummary(
     val id: Long,
     val name: String,
+    @SerialName("start_date")
     val startDate: String,
     val type: String,
+    @SerialName("average_heartrate")
     val averageHeartrate: Double? = null,
+    @SerialName("average_speed")
     val averageSpeed: Double? = null,
+    @SerialName("moving_time")
     val movingTime: Int? = null,
     val distance: Double? = null,
+    @SerialName("average_cadence")
     val averageCadence: Double? = null
 )
