@@ -183,7 +183,7 @@ function App() {
                   {recent.map(a => (
                     <li key={a.id} className="activity-item">
                       <span>{emojiMap[a.type] || '❓'} {a.name}</span>
-                      <span>{new Date(a.start_date).toLocaleString()}</span>
+                      <span>{new Date(a.startDate).toLocaleString()}</span>
                     </li>
                   ))}
                 </ul>
