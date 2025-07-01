@@ -203,9 +203,23 @@ fun Application.module() {
                 }.body()
 
                 val start = offset % limit
-                val result = if (start > 0) activities.drop(start) else activities
+                val slice = if (start > 0) activities.drop(start) else activities
 
-                call.respond(result)
+                val response = slice.map {
+                    Activity(
+                        id = it.id,
+                        name = it.name,
+                        startDate = it.startDate,
+                        type = it.type,
+                        averageHeartrate = it.averageHeartrate,
+                        averageSpeed = it.averageSpeed,
+                        movingTime = it.movingTime,
+                        distance = it.distance,
+                        averageCadence = it.averageCadence
+                    )
+                }
+
+                call.respond(response)
             }
         }
     }
@@ -240,5 +254,18 @@ data class ActivitySummary(
     val movingTime: Int? = null,
     val distance: Double? = null,
     @SerialName("average_cadence")
+    val averageCadence: Double? = null
+)
+
+@Serializable
+data class Activity(
+    val id: Long,
+    val name: String,
+    val startDate: String,
+    val type: String,
+    val averageHeartrate: Double? = null,
+    val averageSpeed: Double? = null,
+    val movingTime: Int? = null,
+    val distance: Double? = null,
     val averageCadence: Double? = null
 )
