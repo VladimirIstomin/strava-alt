@@ -67,6 +67,13 @@ h1 {
   color: #8a56ff;
 }
 
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
 .activity-list {
   list-style: none;
   padding: 0;
@@ -80,14 +87,18 @@ h1 {
   border-bottom: 1px solid #eee;
 }
 
+
 .all-button, .back-button {
-  margin-top: 1rem;
   padding: 0.5rem 1rem;
   background: #8a56ff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.back-button {
+  margin-top: 1rem;
 }
 
 .all-button:hover, .back-button:hover {
