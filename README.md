@@ -29,9 +29,12 @@ STRAVA_CLIENT_ID=<your_client_id>
 STRAVA_CLIENT_SECRET=<your_client_secret>
 STRAVA_REDIRECT_URI=http://localhost:8080/api/v1/callback
 FRONTEND_URL=http://localhost:5173
+COOKIE_DOMAIN=localhost
 ```
 
-`FRONTEND_URL` controls where the backend redirects users after authentication. These variables are referenced in `application.conf`.
+`FRONTEND_URL` controls where the backend redirects users after authentication.
+`COOKIE_DOMAIN` should be set to the parent domain shared by the frontend and backend so that refresh tokens work across subdomains.
+These variables are referenced in `application.conf`.
 
 The server will start on `http://localhost:8080`.
 All API endpoints are available under the `/api/v1` path.
@@ -61,7 +64,7 @@ npm run dev
 
 The app will be available at `http://localhost:5173` by default.
 
-Open the frontend in your browser and click "Login with Strava" to authorize and see your name in the top right corner.
+Open the frontend in your browser and click "Login with Strava". After authenticating with Strava you will be redirected back with an `access_token` query parameter. The frontend stores this value locally and uses a refresh token cookie set by the backend to obtain new access tokens when needed.
 
 ## Android project
 
