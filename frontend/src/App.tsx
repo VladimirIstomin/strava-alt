@@ -146,7 +146,7 @@ function App() {
       <main className="content">
         {view === 'home' && (
           <>
-            <h1>Welcome to Travalt</h1>
+            {!user && <h1>Welcome to Travalt</h1>}
             {user && (
               <>
                 <h2>Последние активности</h2>
