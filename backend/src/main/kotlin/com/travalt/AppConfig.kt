@@ -9,7 +9,8 @@ data class AppConfig(
     val stravaClientId: String,
     val stravaClientSecret: String,
     val stravaRedirectUri: String,
-    val frontendUrl: String
+    val frontendUrl: String,
+    val cookieDomain: String?
 ) {
     companion object {
         fun load(): AppConfig {
@@ -31,21 +32,27 @@ data class AppConfig(
                 config.getString("frontend.url")
             else "http://localhost:5173"
 
+            val cookieDomain = if (config.hasPath("cookie.domain"))
+                config.getString("cookie.domain")
+            else null
+
             return AppConfig(
                 stravaClientId = clientId,
                 stravaClientSecret = clientSecret,
                 stravaRedirectUri = redirectUri,
-                frontendUrl = frontendUrl
+                frontendUrl = frontendUrl,
+                cookieDomain = cookieDomain
             )
         }
     }
 
     fun logSanitized(log: org.slf4j.Logger) {
         log.info(
-            "AppConfig: stravaClientId={}, stravaRedirectUri={}, frontendUrl={}",
+            "AppConfig: stravaClientId={}, stravaRedirectUri={}, frontendUrl={}, cookieDomain={}",
             stravaClientId,
             stravaRedirectUri,
-            frontendUrl
+            frontendUrl,
+            cookieDomain ?: "<none>"
         )
     }
 }
