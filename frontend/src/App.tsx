@@ -149,15 +149,8 @@ function App() {
             {!user && <h1>Welcome to Travalt</h1>}
             {user && (
               <>
+              <div className="activity-header">
                 <h2>Последние активности</h2>
-                <ul className="activity-list">
-                  {recent.map(a => (
-                    <li key={a.id} className="activity-item">
-                      <span>{emojiMap[a.type] || '❓'} {a.name}</span>
-                      <span>{new Date(a.start_date).toLocaleDateString()}</span>
-                    </li>
-                  ))}
-                </ul>
                 <button
                   onClick={() => {
                     setActivities([])
@@ -169,6 +162,15 @@ function App() {
                 >
                   Все
                 </button>
+              </div>
+              <ul className="activity-list">
+                  {recent.map(a => (
+                    <li key={a.id} className="activity-item">
+                      <span>{emojiMap[a.type] || '❓'} {a.name}</span>
+                      <span>{new Date(a.start_date).toLocaleDateString()}</span>
+                    </li>
+                  ))}
+                </ul>
               </>
             )}
           </>
