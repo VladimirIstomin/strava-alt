@@ -233,7 +233,10 @@ function App() {
         )}
         {view === 'activities' && (
           <>
-            <button onClick={() => setView('home')} className="back-button">На главную</button>
+            <div className="activities-header">
+              <h2>Все активности</h2>
+              <button onClick={() => setView('home')} className="back-button">Назад</button>
+            </div>
             <ul className="activity-list">
               {activities.map(a => (
                 <li key={a.id} className="activity-item">
