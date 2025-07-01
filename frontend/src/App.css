@@ -143,3 +143,38 @@ h1 {
 .all-button:hover, .back-button:hover {
   opacity: 0.9;
 }
+@media (max-width: 600px) {
+  .header {
+    padding: 0.5rem 1rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .all-button, .back-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .activity-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .activity-header span {
+    font-size: 0.9rem;
+  }
+
+  .activity-details {
+    font-size: 0.85rem;
+  }
+}
