@@ -91,12 +91,12 @@ fun Application.module() {
                     return@get
                 }
 
-            val token: TokenResponse = httpClient.post("https://www.strava.com/oauth/token") {
-                parameter("client_id", clientId)
-                parameter("client_secret", clientSecret)
-                parameter("code", code)
-                parameter("grant_type", "authorization_code")
-            }.body()
+                val token: TokenResponse = httpClient.post("https://www.strava.com/oauth/token") {
+                    parameter("client_id", clientId)
+                    parameter("client_secret", clientSecret)
+                    parameter("code", code)
+                    parameter("grant_type", "authorization_code")
+                }.body()
 
                 call.sessions.set(UserSession(token.access_token))
                 call.respondRedirect("http://localhost:5173")
@@ -114,9 +114,9 @@ fun Application.module() {
                     return@get
                 }
 
-            val athlete: Athlete = httpClient.get("https://www.strava.com/api/v3/athlete") {
-                header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
-            }.body()
+                val athlete: Athlete = httpClient.get("https://www.strava.com/api/v3/athlete") {
+                    header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
+                }.body()
 
                 call.respond(
                     UserInfo(
@@ -133,16 +133,16 @@ fun Application.module() {
                     return@get
                 }
 
-            val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 5
-            val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
+                val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 5
+                val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
 
-            val page = offset / limit + 1
+                val page = offset / limit + 1
 
-            val activities: List<ActivitySummary> = httpClient.get("https://www.strava.com/api/v3/athlete/activities") {
-                header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
-                parameter("page", page)
-                parameter("per_page", limit)
-            }.body()
+                val activities: List<ActivitySummary> = httpClient.get("https://www.strava.com/api/v3/athlete/activities") {
+                    header(HttpHeaders.Authorization, "Bearer ${session.accessToken}")
+                    parameter("page", page)
+                    parameter("per_page", limit)
+                }.body()
 
                 val start = offset % limit
                 val result = if (start > 0) activities.drop(start) else activities
