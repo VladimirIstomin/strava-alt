@@ -100,6 +100,7 @@ fun Application.module() {
                 }.body()
 
                 call.sessions.set(UserSession(token.access_token))
+                call.application.environment.log.info("Redirecting authenticated user to {}", frontendUrl)
                 call.respondRedirect(frontendUrl)
             }
 
