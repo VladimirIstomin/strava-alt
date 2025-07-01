@@ -85,7 +85,7 @@ fun Application.module() {
                     parameters.append("client_id", clientId)
                     parameters.append("redirect_uri", redirectUri)
                     parameters.append("response_type", "code")
-                    parameters.append("scope", "read")
+                    parameters.append("scope", "read,activity:read")
                     parameters.append("approval_prompt", "auto")
                 }.buildString()
                 call.respondRedirect(url)

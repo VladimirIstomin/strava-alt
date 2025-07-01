@@ -32,6 +32,10 @@ FRONTEND_URL=http://localhost:5173
 COOKIE_DOMAIN=localhost
 ```
 
+The login flow requests the `activity:read` scope so the backend can fetch
+user activities from Strava. Ensure your application is allowed to access this
+scope in the Strava developer settings.
+
 `FRONTEND_URL` controls where the backend redirects users after authentication.
 `COOKIE_DOMAIN` should be set to the parent domain shared by the frontend and backend so that refresh tokens work across subdomains.
 These variables are referenced in `application.conf`.
