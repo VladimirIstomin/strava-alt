@@ -38,6 +38,8 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 
+import com.travalt.AppConfig
+
 private val log = LoggerFactory.getLogger("Application")
 
 fun main() {
@@ -45,10 +47,11 @@ fun main() {
 }
 
 fun Application.module() {
-    val clientId = System.getenv("STRAVA_CLIENT_ID") ?: error("STRAVA_CLIENT_ID not set")
-    val clientSecret = System.getenv("STRAVA_CLIENT_SECRET") ?: error("STRAVA_CLIENT_SECRET not set")
-    val redirectUri = System.getenv("STRAVA_REDIRECT_URI") ?: "http://localhost:8080/api/v1/callback"
-    val frontendUrl = System.getenv("FRONTEND_URL") ?: "http://localhost:5173"
+    val config = AppConfig.load().also { it.logSanitized(log) }
+    val clientId = config.stravaClientId
+    val clientSecret = config.stravaClientSecret
+    val redirectUri = config.stravaRedirectUri
+    val frontendUrl = config.frontendUrl
 
     install(ContentNegotiation) {
         json(Json { prettyPrint = true; ignoreUnknownKeys = true })

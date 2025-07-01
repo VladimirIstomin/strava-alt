@@ -31,7 +31,7 @@ STRAVA_REDIRECT_URI=http://localhost:8080/api/v1/callback
 FRONTEND_URL=http://localhost:5173
 ```
 
-`FRONTEND_URL` controls where the backend redirects users after authentication.
+`FRONTEND_URL` controls where the backend redirects users after authentication. These variables are referenced in `application.conf`.
 
 The server will start on `http://localhost:8080`.
 All API endpoints are available under the `/api/v1` path.
