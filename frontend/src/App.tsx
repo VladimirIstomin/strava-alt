@@ -165,7 +165,7 @@ function App() {
             {!user && <h1>Welcome to Travalt</h1>}
             {user && (
               <>
-              <div className="activity-header">
+              <div className="activities-header">
                 <h2>Последние активности</h2>
                 <button
                   onClick={() => {

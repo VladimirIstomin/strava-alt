@@ -80,6 +80,18 @@ h1 {
   border-bottom: 1px solid #eee;
 }
 
+.activities-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.activities-header h2 {
+  margin: 0 auto;
+}
+
 
 .activity-header {
   display: flex;
@@ -106,6 +118,13 @@ h1 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.activities-header .all-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .back-button {
