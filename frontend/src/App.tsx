@@ -40,6 +40,25 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [expandedId, setExpandedId] = useState<number | null>(null)
 
+  // Restore the current view from the URL hash on initial load
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (hash === 'activities') {
+      setView('activities')
+    } else {
+      setView('home')
+    }
+  }, [])
+
+  // Persist the view state in the URL hash so refreshes keep the same screen
+  useEffect(() => {
+    if (view === 'activities') {
+      window.location.hash = 'activities'
+    } else {
+      window.location.hash = ''
+    }
+  }, [view])
+
   const formatTime = (seconds?: number): string => {
     if (seconds == null) return '—'
     const h = Math.floor(seconds / 3600)
